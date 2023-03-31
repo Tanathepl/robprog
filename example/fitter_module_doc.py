@@ -83,12 +83,10 @@ def model_function(x: T, scale: float, offset: float) -> T:
 
     Examples
     -----------
-    Normal sine at pi
     >>> scale, offset = 1.0, 0.0
     >>> np.allclose(model_function(np.pi, scale, offset), 0.0)
     True
 
-    Scaled sine at pi
     >>> scale, offset = 2.0, -1.0
     >>> np.allclose(model_function(np.pi, scale, offset), -1.0)
     True
@@ -133,12 +131,9 @@ def fit_data(x: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
 
     Examples
     -----------
-    Normal sine
     >>> xdata = np.arange(0, 4 * np.pi, 0.1)
     >>> ydata = np.sin(xdata)
     >>> params, errors = fit_data(xdata, ydata)
-
-    Scale estimate should be close to one
     >>> np.allclose(params[0], 1.0)
     True
     """
