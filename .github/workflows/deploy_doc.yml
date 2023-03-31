@@ -22,10 +22,11 @@ jobs:
       - name: Install dependencies
         run: pip install sphinx
 
-      - run: |
-        cd doc
-        sphinx-build -d _build/doctrees . _build/html
-        mv _build/html ../public
+      - name: Deploy
+        run: |
+          cd doc
+          sphinx-build -d _build/doctrees . _build/html
+          mv _build/html ../public
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
