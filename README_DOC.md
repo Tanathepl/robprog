@@ -96,9 +96,9 @@ jobs:
 
       - name: Deploy
         run: |
-          cd doc/source
-          sphinx-build -d _build/doctrees . _build/html
-          mv _build/html ../../public
+          cd doc
+          make html
+          mv build/html ../public
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
