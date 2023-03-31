@@ -1,6 +1,4 @@
-from fitter_module import load_data
-from fitter_module import fit_data
-from fitter_module import plot_fit
+from fitter_module import load_data, fit_data, plot_fit
 
 import sys
 
@@ -10,9 +8,9 @@ def main():
 
     data = load_data(fn)
 
-    params, errors = fit_data(data['x'], data['y'])
+    params, errors = fit_data(data['x'],data['y'])
 
-    plot_fit(data['x'], data['y'], params, errors)
+    plot_fit(data['x'],data['y'],params,errors)
 
 
 if __name__ == "__main__":
