@@ -2,7 +2,7 @@
 
 This crash course will focus on software engineering tools and methodologies to write better tested, documented code that is easier to understand and maintain. We will probe:
 
-- documentation
+- documentation: [exercise](README_DOC.md)
 - tests
 - static analysis
 - automation
