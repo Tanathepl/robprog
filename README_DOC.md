@@ -1,116 +1,131 @@
-## TP3 - Gestion de la documentation
+# Documentation
 
-**Challenge:** Le post-doc génial du groupe est parti. Il travaillait sur un code super classe pour estimer les paramètres d'un modèle à partir de données d'une expérience de macro-biologie quantique en milieu relativiste.
-Il a laissé son code, mais il n'a écrit aucune documentation ! A vous de jouer pour le documenter avant la release de la fin de semaine.
+**Challenge:** The great post-doc of the group has left. He was working on a great code to estimate the parameters of a model from the data of a top secret experiment. He left the code, but he never wrote the documentation... It is your turn now to document it before the next release!
 
-----
+You can (fork and) clone the repository on your computer using git:
 
-### Etape 0 : Générer un Software Design Documentation
-
-
-*   Pourquoi le code a été créé ? Quelles sont les motivations, les challenges ?
-
-*   Description succinte avec des mots simples du concept
-
-*   Implémentation technique, dépendances externes
-
-*   Implication à plus grande échelle ?
-
-*   Autres méthodes existantes ?
+```bash
+git clone ...
+```
 
 ----
 
-### Etape 1 : Identifier les utilisateurs
+## Step 0: Software Design Documentation
 
-* Est-ce que le code est un framework, une bibliothèque, un executable ?
-* Est-ce que le code est en open source, sur une plateforme collaborative ?
-* Y-a-t-il plusieurs contributeurs ? Des utilisateurs déjà identifiés ?
+* Why the code has been created? What were the motivations, the challenges?
+* Brief description of the concept
+* Technical implementation, external dependencies
+* Other existing methods?
+
+----
+
+## Step 1: Identifying the users
+
+* What is it: a framework, a library, an executable script?
+* Is the code open source? On a collaborative platform?
+* Are there several contributors? Already identified users?
 
 ---
 
-### Etape 2 : Documenter le code
+## Setp 2: Documenting the code
 
-* En utilisant des docstrings, documenter le code.
-  Voir <a href="https://www.python.org/dev/peps/pep-0257">PEP 257</a>,
+* Using docstrings, document the code.
+  See <a href="https://www.python.org/dev/peps/pep-0257">PEP 257</a>,
   <a href="https://www.python.org/dev/peps/pep-0258">PEP 258</a>,
   <a href="https://numpydoc.readthedocs.io/en/latest/format.html">numpydoc</a>,
   <a href="https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings">google</a>
-* Rajouter les informations de <a href="https://docs.python.org/3/library/typing.html">type hint</a>
-* Le refactoring vous démange ? C'est normal, et c'est sain.
+* Add <a href="https://docs.python.org/3/library/typing.html">type hints</a>
+* You want to refactor the code? That's normal :-)
 ---
 
-### Etape 3 : Construire une documentation haut niveau
+## Step 3: High level documentation
 
+Let's make a user manual using [sphinx](https://www.sphinx-doc.org/en/master/). First make sure you are working with the correct environment:
+
+```bash
 conda env create -f environment.yml
+```
 
-* Faisons une documentation utilisateurs en utilisant [sphinx](https://www.sphinx-doc.org/en/master/)
+Then, at the root of the repository, make a new folder called `doc`, and execute:
 
-* Dans le dossier TP3, créer un dossier `doc`, et aller dans ce dossier.
+```bash
+cd doc
+`sphinx-quickstart`
+```
 
-* exécuter `sphinx-quickstart`
+Follow the instructions on screen (editable later), and finally build the documentation:
 
-* Suivre les instructions à l'écran (modifiable plus tard)
+```bash
+make html
+```
 
-* Executer `make html`, et ouvrir `_build/html/index.html`
-
-* A vous de jouer maintenant en éditant les fichiers pour faire une documentation utilisateur. Penser à tout ce qui pourrait être utile: installation, quickstart, tutoriel, descriptions, liens utiles, ...
-
-* Une fois la documentation faite, trouver un/une collègue, et discuter autour de vos docs respectives. La communication c'est important !
+You can then open the file `doc/build/html/index.html` in a browser and see your documentation! It is empty for the moment, but you can edit it to add more pages such as installation, quickstart, tutorial, or even include the code docstrings...
 
 ---
 
-### Etape 4 : Pour aller plus loin
+## Step 4: Automation
 
-##### Intégration des tests
+Maintaining documentation is more efficient if the execution chain is automated. <br/>The easiest way to do this is to use continuous integration to re-generate documentation automatically as code changes. <br/>You will cover the notions of continuous integration later, but here is a minimal example on the GitHub/GitLab CI to build the doc and publish it on github/gitlab pages automatically:
 
-Vous ne verrez que cet après-midi les outils de test, mais c'est une bonne pratique de lier la documentation et les tests ensemble.<br/> Par exemple, quand vous lisez la documentation de [scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html), les examples affichés sont aussi ceux qui servent à tester le code (unit tests).
+### GitHub example
 
-    def function(arg):
-      """
-      A short description.
+```yaml
+name: GitHub Pages
 
-      A bit longer description.
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
-      Parameters
-      ----------
-      arg : type
-          description
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
 
-      Returns
-      -------
-      type
-          description
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
 
-      Raises
-      ------
-      Exception
-          description
+      - name: Install dependencies
+        run: pip install sphinx
 
-      Examples
-      --------
-      Examples should be written in doctest format, and
-      should illustrate how to use the function/class.
-      >>>
+      - name: Deploy
+        run: |
+          cd doc/source
+          sphinx-build -d _build/doctrees . _build/html
+          mv _build/html ../../public
 
-      """
-      pass
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+```
 
-Essayer de rajouter des doctests aux fonctions du TP3\.
+Then once the Actions is successful, go to the GitHub website, and select `Settings` on your repository. Click on `Pages`, and configure the `gh-pages` as the deployment branch, and the folder `root`. Save and enjoy the site live!
 
-##### Automatisation de la chaîne
+### GitLab example
 
-Le maintien de la documentation est plus efficace si la chaîne d'exécution est automatisée. <br/>La façon la plus simple de le faire est d'utiliser l'intégration continue pour re-générer la documentation automatiquement lors de modification du code. <br/>Vous aborderez les notions d'intégration continue demain, mais voici un example minimal sur la CI gitlab pour construire la doc et la publier sur gitlab pages automatiquement:
+```yaml
+image: python:3.9-alpine
 
-    image: python:3.9-alpine
+pages:
+  script:
+  - pip install sphinx
+  - sphinx-build -d _build/doctrees . _build/html
+  - mv _build/html public
+  artifacts:
+      paths:
+      - public
+  only:
+  - master
+```
 
-    pages:
-      script:
-      - pip install sphinx
-      - sphinx-build -d _build/doctrees . _build/html
-      - mv _build/html public
-      artifacts:
-         paths:
-         - public
-      only:
-      - master
+
 ---
