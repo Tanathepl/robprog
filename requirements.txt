@@ -1,0 +1,11 @@
+sphinx-autodoc-typehints
+sphinx_rtd_theme
+myst-parser
+recommonmark
+scipy
+seaborn
+pytest
+flake8
+ipython
+pytest-cov
+mypy
