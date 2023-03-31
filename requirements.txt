@@ -9,3 +9,4 @@ flake8
 ipython
 pytest-cov
 mypy
+hypothesis
