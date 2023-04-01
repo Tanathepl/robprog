@@ -26,7 +26,7 @@ jobs:
         pip install flake8
     - name: Main
       run: |
-        flake8 example/*.py --count --show-source --statistics --ignore=E302,E501,E731
+        flake8 example/*.py --count --show-source --statistics --ignore=E302,E501,W605
     - name: Tests
       run: |
-        flake8 tests/*.py --count --show-source --statistics --ignore=E302,E501,E731
+        flake8 tests/*.py --count --show-source --statistics --ignore=E302,E501
