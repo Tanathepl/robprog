@@ -20,11 +20,13 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from hypothesis import example, given, strategies
+from hypothesis import given, strategies
+
 
 def test_load_data():
     data = load_data('data.csv')
     assert type(data) == pd.DataFrame
+
 
 @pytest.mark.parametrize(
     "x,a,b,expected", [(0, 1, 1, 1), (np.pi/2, 1, 1, 2)]
@@ -32,10 +34,12 @@ def test_load_data():
 def test_model_function(x, a, b, expected):
     assert model_function(x, a, b) == expected
 
+
 def test_load_wrong_data():
     # how could we issue a better error?
     with pytest.raises(FileNotFoundError):
         load_data("toto.csv")
+
 
 def test_fit_data_exception():
     # how we could make our function more robust to this?
@@ -45,9 +49,20 @@ def test_fit_data_exception():
         y[0] = None
         fit_data(x, y)
 
+
 @given(
-    a=strategies.floats(allow_nan=False, allow_infinity=False, min_value=-1000, max_value=1000),
-    b=strategies.floats(allow_nan=False, allow_infinity=False, min_value=-1000, max_value=1000),
+    a=strategies.floats(
+        allow_nan=False,
+        allow_infinity=False,
+        min_value=-1000,
+        max_value=1000
+    ),
+    b=strategies.floats(
+        allow_nan=False,
+        allow_infinity=False,
+        min_value=-1000,
+        max_value=1000
+    ),
 )
 def test_idempotence(a, b):
     # what if we release the bounds?
