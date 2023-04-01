@@ -45,15 +45,18 @@ def test_fit_data_exception():
         y[0] = None
         fit_data(x, y)
 
-
 @given(
-    x=strategies.floats(allow_nan=False, allow_infinity=False, width=32),
-    a=strategies.floats(allow_nan=False, allow_infinity=False, width=32),
-    b=strategies.floats(allow_nan=False, allow_infinity=False, width=32),
+    a=strategies.floats(allow_nan=False, allow_infinity=False, min_value=-1000, max_value=1000),
+    b=strategies.floats(allow_nan=False, allow_infinity=False, min_value=-1000, max_value=1000),
 )
-@example(x=0, a=1, b=1)
-def test_add__hypothesis(x, a, b):
-    # what if we relax nan & inf?
-    # what if we relax width=32?
-    x = np.deg2rad(x % 360)
-    assert model_function(x, a, b) <= np.abs(a) + np.abs(b)
+def test_idempotence(a, b):
+    # what if we release the bounds?
+    x0 = np.arange(0., 4 * np.pi, 0.1)
+    y0 = a * np.sin(x0) + b
+
+    params0, errs0 = fit_data(x0, y0)
+
+    y1 = params0[0] * np.sin(x0) + params0[1]
+    params1, errs1 = fit_data(x0, y1)
+
+    assert np.allclose(params0[0], params1[0], atol=1e-6)

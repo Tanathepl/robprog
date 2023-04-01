@@ -25,6 +25,7 @@ sns.set_context('talk')
 
 T = TypeVar('T', float, np.ndarray)
 
+
 def load_data(fn: str) -> pd.DataFrame:
     """ Load data
 
@@ -49,8 +50,9 @@ def load_data(fn: str) -> pd.DataFrame:
     data = pd.read_csv(fn, sep=',')
     return data
 
+
 def model_function(x: T, scale: float, offset: float) -> T:
-    """ Evaluate sine function at angle `x` with parameters `scale` and `offset`
+    """ Evaluate sine at angle `x` with parameters `scale` and `offset`
 
     Parameters
     ----------
@@ -92,6 +94,7 @@ def model_function(x: T, scale: float, offset: float) -> T:
     True
     """
     return scale * np.sin(x) + offset
+
 
 def fit_data(x: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """ Use non-linear least squares to fit `model_function` to data (`x`, `y`)
@@ -143,6 +146,7 @@ def fit_data(x: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
 
     return params, err
 
+
 def plot_fit(
         x: np.ndarray, y: np.ndarray,
         params: np.ndarray, errors: np.ndarray) -> None:
@@ -170,7 +174,8 @@ def plot_fit(
         label='fit'.format(*params)
     )
     plt.title(
-        r'$f(x) = a \times sin(x) + b$, with a = {:.2f} $\pm$ {:.2f}, b = {:.2f} $\pm$ {:.2f}'.format(
+        r'$f(x) = a \times sin(x) + b, with$' +
+        r' a = {:.2f} $\pm$ {:.2f}, b = {:.2f} $\pm$ {:.2f}'.format(
             *np.transpose((params, errors)).flatten()
         )
     )
