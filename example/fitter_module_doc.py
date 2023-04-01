@@ -174,7 +174,7 @@ def plot_fit(
         label='fit'.format(*params)
     )
     plt.title(
-        r'$f(x) = a \times sin(x) + b, with$' +
+        r'$f(x) = a \times sin(x) + b, with$'
         r' a = {:.2f} $\pm$ {:.2f}, b = {:.2f} $\pm$ {:.2f}'.format(
             *np.transpose((params, errors)).flatten()
         )
