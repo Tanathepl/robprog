@@ -1,21 +1,3 @@
-# Static program analysis
-
-Static program analysis is the analysis of computer programs performed without executing them. This is typically used to make sure syntax is uniform across different peices of code, and it will check pre-defined rules to be satisfied. In Python, this will be used to check that Python coding style is respected ([PEP8](https://peps.python.org/pep-0008/)), or to perform [type checks](https://docs.python.org/3/library/typing.html).
-
-You can read all rules, or simply use tools that will do it for you such as `flake8` for the linting, or `mypy` for the type checks. Try for example:
-
-```bash
-flake8 fitter.py --count --show-source --statistics
-```
-
-or
-
-```bash
-mypy example/fitter_module_doc.py --ignore-missing-imports
-```
-
-In my opinion, it also reduces the number of mistakes and force to think about the design. In most languages, automatic formatting (e.g. `black` in Python, `clang-format` in C++) also seems like the way to go. Mandating that everyone always is probably a good idea. It is good not to have too much democracy and freedom in team decision-making on these issues; uniformity matters much more than any particular style choice.
-
 # Testing your code
 
 Testing your code... a very vast subject. For some it is a fuzzy concept, borderline boring, for others it is the heart of programming; but everyone agrees that testing your code well is not an easy task. In Python, there are libraries to facilitate the writing of tests (`doctest`, `pytest`, `nose`, `hypothesis`, ...), still it remains to make the tests relevant and effective to understand the limits and the flaws of our implementation and design. And then there is the age-old question: have I tested my code enough? It might not be an existential question if you're writing a little library for your friends (though), but if you need to send a satellite into space, or write the guidance program for an intercontinental missile the question is legit.
@@ -61,13 +43,13 @@ Doctests are well suited for simple function testing. You are going to write you
 To run the tests, open a terminal, navigate to the directory containing fitter_module.py, and run the following command:
 
 ```bash
-python -m doctest lib_background.py
+python -m doctest mymodule.py
 ```
 
 This won’t display anything unless an example fails, in which case the failing example(s) and the cause(s) of the failure(s) are printed to stdout. Run it with the -v switch instead:
 
 ```bash
-python -m doctest lib_background.py -v
+python -m doctest mymodule.py -v
 ```
 
 and a detailed report of all examples tried is printed to standard output, along with assorted summaries at the end.
