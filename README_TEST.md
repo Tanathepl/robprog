@@ -154,7 +154,7 @@ def test_add_numbers():
     assert(add_numbers(1, 1) == 2)
 ```
 
-But have we really verified anything apart from `1 + 1 = 2`? I could have made a bug by writing return `a + a`. And what about the behavior of the `add_one` function in general? Just to name the obvious, what happens if we pass `None` as input? A clever mind might say that it would be enough to test on a set of different inputs or add conditions to our function, but that would be underestimating the human mind in the face of laziness and overestimating our imaginative capacities in general in the face of the unexpected.
+But have we really verified anything apart from `1 + 1 = 2`? I could have made a bug by writing return `a + a`. And what about the behavior of the `add_numbers` function in general? Just to name the obvious, what happens if we pass `None` as input? A clever mind might say that it would be enough to test on a set of different inputs or add conditions to our function, but that would be underestimating the human mind in the face of laziness and overestimating our imaginative capacities in general in the face of the unexpected.
 
 ### From the particular case to the property
 
