@@ -44,13 +44,14 @@ Let's make a user manual using [sphinx](https://www.sphinx-doc.org/en/master/). 
 
 ```bash
 conda env create -f environment.yml
+conda activate robprog
 ```
 
 Then, at the root of the repository, make a new folder called `doc`, and execute:
 
 ```bash
 cd doc
-`sphinx-quickstart`
+sphinx-quickstart
 ```
 
 Follow the instructions on screen (editable later), and finally build the documentation:
@@ -65,7 +66,7 @@ You can then open the file `doc/build/html/index.html` in a browser and see your
 
 ## Step 4: Automation
 
-Maintaining documentation is more efficient if the execution chain is automated. <br/>The easiest way to do this is to use continuous integration to re-generate documentation automatically as code changes. <br/>You will cover the notions of continuous integration later, but here is a minimal example on the GitHub/GitLab CI to build the doc and publish it on github/gitlab pages automatically:
+Maintaining documentation is more efficient if the execution chain is automated. The easiest way to do this is to use continuous integration to re-generate documentation automatically as code changes. You will cover the notions of continuous integration later, but here is a minimal example on the GitHub/GitLab CI to build the doc and publish it on github/gitlab pages automatically:
 
 ### GitHub example
 
@@ -92,7 +93,7 @@ jobs:
           python-version: '3.9'
 
       - name: Install dependencies
-        run: pip install sphinx sphinx-autodoc-typehints sphinx_rtd_theme myst-parser
+        run: pip install -r requirements.txt
 
       - name: Deploy
         run: |
@@ -117,9 +118,10 @@ image: python:3.9-alpine
 
 pages:
   script:
-  - pip install sphinx
-  - sphinx-build -d _build/doctrees . _build/html
-  - mv _build/html public
+  - pip install -r requirements.txt
+  - cd doc
+  - make html
+  - mv build/html ../public
   artifacts:
       paths:
       - public

@@ -1,6 +1,6 @@
 # Robust Programming
 
-This crash course will focus on software engineering tools and methodologies to write better tested, documented code that is easier to understand and maintain. We will probe:
+This crash course focuses on software engineering tools and methodologies to write better tested, documented code that is easier to understand and maintain. We will probe:
 
 - documentation: [exercise](README_DOC.md)
 - static analysis & tests: [exercise](README_TEST.md)
