@@ -1,11 +1,11 @@
 name: robprog
 channels:
   - defaults
-  - conda-forge
+  - conda-forge   # Efficient with big database but take time to run
 dependencies:
   - python==3.11
-  - pip
-  - pip:
+  - pip           # Quicker but normally have conflict with versions
+  - pip:  
     - -r requirements.txt
 
 
