@@ -167,7 +167,7 @@ def plot_fit(
     """
     _ = plt.figure(figsize=(12, 6))
     plt.plot(x, y, ls="", marker="o", label="data")
-    plt.plot(x, model_function(x, *params), "--", label="fit".format(*params))
+    plt.plot(x, model_function(x, *params), "--", label="fit")
     plt.title(
         r"$f(x) = a \times sin(x) + b, with$"
         r" a = {:.2f} $\pm$ {:.2f}, b = {:.2f} $\pm$ {:.2f}".format(

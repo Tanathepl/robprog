@@ -27,7 +27,7 @@ def plot_fit(x, y, params, errors):
     )
     plt.plot(
         x, model_function(x, *params), '--',
-        label='fit'.format(*params)
+        label='fit'
     )
     plt.title(
         r'$f(x) = a \times sin(x) + b$, with a = {:.2f} $\pm$ {:.2f}, b = {:.2f} $\pm$ {:.2f}'.format(
