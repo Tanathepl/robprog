@@ -21,13 +21,14 @@ import numpy as np
 import pandas as pd
 
 import seaborn as sns
-sns.set_context('talk')
 
-T = TypeVar('T', float, np.ndarray)
+sns.set_context("talk")
+
+T = TypeVar("T", float, np.ndarray)
 
 
 def load_data(fn: str) -> pd.DataFrame:
-    """ Load data
+    """Load data
 
     Parameters
     ----------
@@ -47,12 +48,12 @@ def load_data(fn: str) -> pd.DataFrame:
     >>> filename = os.path.join(dir_path, '../data.csv')
     >>> pdf = load_data(filename)
     """
-    data = pd.read_csv(fn, sep=',')
+    data = pd.read_csv(fn, sep=",")
     return data
 
 
 def model_function(x: T, scale: float, offset: float) -> T:
-    """ Evaluate sine at angle `x` with parameters `scale` and `offset`
+    """Evaluate sine at angle `x` with parameters `scale` and `offset`
 
     Parameters
     ----------
@@ -97,7 +98,7 @@ def model_function(x: T, scale: float, offset: float) -> T:
 
 
 def fit_data(x: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-    """ Use non-linear least squares to fit `model_function` to data (`x`, `y`)
+    """Use non-linear least squares to fit `model_function` to data (`x`, `y`)
 
     Assumes ``ydata = model_function(xdata)``, with default parameters
     of ``optimize.curve_fit`` from scipy.
@@ -148,9 +149,9 @@ def fit_data(x: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
 
 
 def plot_fit(
-        x: np.ndarray, y: np.ndarray,
-        params: np.ndarray, errors: np.ndarray) -> None:
-    """ Plot fit against measurements
+    x: np.ndarray, y: np.ndarray, params: np.ndarray, errors: np.ndarray
+) -> None:
+    """Plot fit against measurements
 
     Parameters
     ----------
@@ -165,28 +166,23 @@ def plot_fit(
         on the parameters from `fit_data`
     """
     _ = plt.figure(figsize=(12, 6))
-    plt.plot(
-        x, y, ls='', marker='o',
-        label='data'
-    )
-    plt.plot(
-        x, model_function(x, *params), '--',
-        label='fit'.format(*params)
-    )
+    plt.plot(x, y, ls="", marker="o", label="data")
+    plt.plot(x, model_function(x, *params), "--", label="fit".format(*params))
     plt.title(
-        r'$f(x) = a \times sin(x) + b, with$'
-        r' a = {:.2f} $\pm$ {:.2f}, b = {:.2f} $\pm$ {:.2f}'.format(
+        r"$f(x) = a \times sin(x) + b, with$"
+        r" a = {:.2f} $\pm$ {:.2f}, b = {:.2f} $\pm$ {:.2f}".format(
             *np.transpose((params, errors)).flatten()
         )
     )
-    plt.xlabel('x')
-    plt.ylabel('y')
+    plt.xlabel("x")
+    plt.ylabel("y")
     plt.legend()
     plt.show()
 
 
 if __name__ == "__main__":
-    """ Run the unit test suite """
+    """Run the unit test suite"""
     import doctest
     import sys
-    sys.exit(doctest.testmod()) # type: ignore  # noqa
+
+    sys.exit(doctest.testmod())  # type: ignore  # noqa
